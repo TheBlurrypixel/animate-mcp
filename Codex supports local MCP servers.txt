@@ -1,0 +1,131 @@
+The App should have one workable route of the following table
+Here’s what we look for:
+Application capability	How an MCP server can use it
+API					Read data and perform actions through HTTP or a programming library
+Scripting support			Execute commands inside the application, like JSFL in Animate
+Plugin or extension system		Install a bridge that receives commands and returns results
+Command-line interface			Run commands and collect their output
+Documented file format			Read or modify project files, even if the application isn’t running
+Only a graphical interface		Automate clicks and keystrokes; possible, but usually more fragile
+
+The key limitation is that MCP doesn’t create capabilities the application lacks. For example, if an app only exposes image export, we can expose image export—but editing individual layers would require another access method.
+
+Beyond that, we need:
+- A defined set of tasks: What should the assistant read, create, or change?
+- Access and permissions: Any required account, API credentials, application license, or permission to install an extension.
+- A place to run the server: Usually your computer for desktop applications, or a hosted service for web applications.
+- A connection to the AI client: A transport the client supports, such as local standard input/output or HTTP. 
+- Useful feedback: A way to return data, report errors, and verify whether an operation succeeded.
+
+
+The following will survey launching a local MCP server that will communicate to the Application through stdio and will be served locally on a Windows computer.
+Codex/ChatGPT Work in the browser will secure a tunnel from the MCP server to OpenAI.
+Access to the PowerShell (although your could transpose commands to Bash or CMD) and Administrator Permissions required
+
+1. Make sure Developer Mode enabled in ChatGPT
+Bottom left → Settings → Security and login, then look for Developer mode
+This may have changed UI and may not even be necessary by the time of th
+Check current documentation to find the proper location of the switchis reading
+but this is what it looked like before
+
+
+
+2. Build a local MCP server
+You are here because an MCP server doesn't exist yet for the application or you have specific needs such that current MCP servers are not applicable. 
+Unless you are comfortable writing backend software, I recommend you to vibe code a local server for your application using ChatGPT/Codex.
+A prompt like, Help me write an MCP server for my application, etc...
+Application must support one of the above mentioned interfaces so that the AI can communicate with your application
+This workflow will center around an extension/panel that Connects to the AI via a tunnel.
+Have the server reside in a folder on your computer
+Try using a folder path like:
+C:\Tools\[server folder name]
+
+AI should provide some instructions on starting a local server
+Usually an installation of something like Node.js
+Running an Install script
+Running a Start Script
+Opening a Connection Script in the App
+And Bridge the App to the server via this script
+
+
+
+3. Create the Tunnel
+A secure MCP Tunnel lets you connect private MCP servers to supported OpenAI 
+First, Open the OpenAI Secure MCP Tunnel Setup Guide
+https://developers.openai.com/api/docs/guides/secure-mcp-tunnels?utm_source=chatgpt.com
+Click the Platform tunnel settings link on the page to get your Tunnel ID
+In the Tunnels page click Create Tunnel, enter Name and Desciption, leave reset as is and Submit
+	Name: Application Name
+	Description: Describe Tunnel for App
+Copy the Tunnel ID and paste in a Text File which we will copy-paste later!
+
+
+4. Set up the Tunnel Client
+The tunnel-client will start the long-lived daemon that connects a local or private MCP server
+to the OpenAI control plane over an outbound tunnel. Once running, it exposes local
+operator surfaces at /healthz, /readyz, and /ui.
+
+In the Tunnels page, click Download tunnel-client Button at the top of the page next to Create Tunnel
+Click the one for your system, For me even though I am on Intel, amd64 means 64-bit Intel or AMD
+Therefore the client to download was
+tunnel-client-v0.0.15-windows-amd64.zip
+Extract the tunnel client into your server folder and run the client to get diagnostic data as follows. If help documentation returns then you are ready.
+cd C:\Tools\[server folder name]
+.\tunnel-client.exe help quickstart
+
+
+
+5. Create an API key
+Keep the Powershell window open
+Go to the OpenAI API Keys website here
+https://platform.openai.com/settings/organization/api-keys
+Create new Secret Key
+Enter a name like: [App Name] MCP Tunnel Key
+Keep it Default Project
+For Permissions select Restricted
+Set the Tunnels row to Use because we are using a Tunnel
+Leave everything else at None
+Click the Create secret key button
+Copy the generated API key and keep it Private!
+
+
+
+6. Initialize the Tunnel Client
+Return to the PowerShell window from before
+cd C:\Tools\[server folder name]
+$secureKey = Read-Host "Paste your runtime API key" -AsSecureString
+Paste your API key
+
+// secure the API Key value and Remove the holder from memory
+$env:CONTROL_PLANE_API_KEY = [System.Net.NetworkCredential]::new('', $secureKey).Password
+Remove-Variable secureKey
+
+// Use the tunnel ID and Server to create a profile for the tunnel client to the MCP Server
+$tunnelId = Read-Host "Paste your tunnel ID"
+.\tunnel-client.exe init --sample sample_mcp_stdio_local --profile [App Name] --tunnel-id $tunnelId --mcp-command "node C:/Tools/animate-mcp/src/server.js"
+// Paste the Tunnel ID from before
+
+Check the tunnel for Diagnostic Info
+.\tunnel-client.exe doctor --profile [App Name] --explain
+
+If it passes start running the tunnel!
+.\tunnel-client.exe run --profile [App Name]
+
+Then make sure that the local MCP Server is running
+This is the vibe coded MCP server to Bridge to the app and to the tunnel
+It should have a Start-Bridge script or something like it
+Access a "Connect" button from within the app via an Extension or Script
+
+
+Time to connect or Custom MCP Server for the AI to know which tunnel
+Data will be transfer
+Now Let's Add a Custom MCP Server and tunnel to it
+Plugins > Add > Add custom MCP Server >
+Enter Name
+Enter Description
+Click Tunnel
+Enter the Tunnel ID here
+No Authentication (since its local we should be safe)
+
+
+Follow the instructions to start the Server

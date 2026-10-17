@@ -1,0 +1,2 @@
+cd C:\Tools\animate-mcp
+$secureKey = Read-Host "Paste your runtime API key" -AsSecureString
