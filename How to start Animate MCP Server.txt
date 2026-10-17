@@ -1,0 +1,26 @@
+How to start Animate MCP Server
+
+1. Open Terminal and keep it open
+
+C:\Tools\animate-mcp\START-BRIDGE.cmd
+
+2. Open Animate Window > Extensions > Animate MCP Bridge > Connect
+
+3. Open new Terminal and keep it open
+
+cd C:\Tools\animate-mcp
+$secureKey = Read-Host "Paste your runtime API key" -AsSecureString
+
+4. At prompt enter API Key
+Key found at home NAS
+
+5. In Terminal, enter following and keep it open
+$env:CONTROL_PLANE_API_KEY = [System.Net.NetworkCredential]::new('', $secureKey).Password
+Remove-Variable secureKey
+$env:ANIMATE_MCP_ALLOW_RAW = "1"
+.\tunnel-client.exe run --profile adobe-animate
+
+6. Refresh ChatGPT Work
+
+@ Adobe Animate
+Add prompt here
