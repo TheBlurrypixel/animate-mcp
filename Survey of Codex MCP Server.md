@@ -48,7 +48,7 @@
 
 `The layout may have changed and Developer mode may not be necessary by the time of this documentation. Check current documentation to find the proper location where this switch is located.`
 
-# Build a Custom MCP Server
+# Building a Custom MCP Server
 
 `Assuming an MCP server does not yet exist for the APPLICATION or you have specific needs such that current MCP servers are not applicable.`  
 `Unless you are comfortable writing backend software, I recommend vibe coding a local MCP Server for your application using Codex.`
@@ -70,7 +70,7 @@
 2. `Run a Start Script`  
 3. `Run a Connection Script in the APPLICATION to start the BRIDGE`
 
-# Set up a Tunnel
+# Setting up a Tunnel
 
 `A secure MCP Tunnel will be the transport pathway to private MCP servers to OpenAI’s Control Plane.`
 
@@ -83,7 +83,7 @@
    `Description: Describe Tunnel for Application`  
 5. `Copy the Tunnel ID and save in a text file`
 
-# Set up the Tunnel Client
+# Setting up the Tunnel Client
 
 `The tunnel-client runs the long-lived daemon connecting the MCP server`  
 `to the OpenAI Control Plane.`
