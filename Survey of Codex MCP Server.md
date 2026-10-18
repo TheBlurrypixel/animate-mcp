@@ -59,7 +59,7 @@
 
 `The server should reside locally in a folder on your computer.`  
 `Try using a folder path like:`  
-`C:\Tools\[server folder name]`
+*`C:\Tools\[server folder name]`*
 
 `The AI should provide instructions on how to start the server.`  
 `This may consist of an installation of lightweight backend software such as Node.js and Scripts and configurations files.`
@@ -94,8 +94,8 @@
 3. `Extract the tunnel client into your server folder`  
 4. `Run the client to get diagnostic data as follows.`  
    `If help documentation returns then you are ready.`  
-   `cd C:\Tools\[server folder name]`  
-   `.\tunnel-client.exe help quickstart`
+   *`cd C:\Tools\[server folder name]`*  
+   *`.\tunnel-client.exe help quickstart`*
 
 # 
 
@@ -116,20 +116,20 @@
 # Initializing the Tunnel Client
 
 1. `Return to the PowerShell window`  
-   `cd C:\Tools\[server folder name]`  
-   `$secureKey = Read-Host "Paste your runtime API key" -AsSecureString`  
+   *`cd C:\Tools\[server folder name]`*  
+   *`$secureKey = Read-Host "Paste your runtime API key" -AsSecureString`*  
 2. `Paste your API key`  
 3. `Now secure the API Key value and remove the from temporary memory`  
-4. `$env:CONTROL_PLANE_API_KEY = [System.Net.NetworkCredential]::new('', $secureKey).Password`  
-5. `Remove-Variable secureKey`  
-6. `Use the Tunnel ID and Server executable to create a profile for the Tunnel Client to the MCP Server`  
-7. `$tunnelId = Read-Host "Paste your tunnel ID"`  
-   `.\tunnel-client.exe init --sample sample_mcp_stdio_local --profile [App Name] --tunnel-id $tunnelId --mcp-command "node C:/Tools/animate-mcp/src/server.js"`  
-8. `Paste the Tunnel ID`  
-9. `Check the tunnel for Diagnostic Info`  
-   `.\tunnel-client.exe doctor --profile [App Name] --explain`  
-10. `If it passes you can run the tunnel client long-lived daemon`  
-    `.\tunnel-client.exe run --profile [App Name]`
+   *`$env:CONTROL_PLANE_API_KEY = [System.Net.NetworkCredential]::new('', $secureKey).Password`*  
+   *`Remove-Variable secureKey`*  
+4. `Use the Tunnel ID and Server executable to create a profile for the Tunnel Client to the MCP Server`  
+   `$tunnelId = Read-Host "Paste your tunnel ID"`  
+   *`.\tunnel-client.exe init --sample sample_mcp_stdio_local --profile [App Name] --tunnel-id $tunnelId --mcp-command "node C:/Tools/animate-mcp/src/server.js"`*  
+5. `Paste the Tunnel ID`  
+6. `Check the tunnel for Diagnostic Info`  
+   *`.\tunnel-client.exe doctor --profile [App Name] --explain`*  
+7. `If it passes you can run the tunnel client long-lived daemon`  
+   *`.\tunnel-client.exe run --profile [App Name]`*
 
 # Verifying the local MCP Server
 
@@ -147,7 +147,7 @@
 4. `No Authentication (since its local we should be safe)`  
 5. `Follow the instructions to start the Server`  
 6. `Test the MCP Server. Go to the Codex prompt and Enter`  
-   `@[Application Name]`  
-   `Prompt to Application Diagnostic Request`  
+   *`@[Application Name]`*  
+   *`Prompt to Application Diagnostic Request`*  
 7. `If all goes well Congratulations!`  
    `If not you will need to request help from AI`
