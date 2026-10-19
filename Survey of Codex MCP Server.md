@@ -1,7 +1,7 @@
 # `Survey of Codex Custom MCP Server`
 
 `To create a Custom MCP Server the APPLICATION should have one workable`  
-`route of the following table`
+`route of the following table. TLDR Start at`**`Developer Mode`**
 
 | `Application capability` | `How an MCP server can use it` |
 | :---- | :---- |
@@ -42,7 +42,7 @@
 # Developer Mode
 
 **`Make sure Developer Mode is enabled in ChatGPT/Codex`**  
-`For me, I found this setting under the follow:`  
+`For me, I found this setting under the following:`  
 `Bottom left > Settings > Security and login`  
 `then look for Developer mode.`
 
